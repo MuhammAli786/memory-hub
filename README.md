@@ -1,36 +1,82 @@
 # Second Brain Memory Architecture
 
-A security-sanitized reference implementation for a personal knowledge and memory layer. It documents the design, contracts, lifecycle hooks, and a small MCP tool-catalog pattern without including operational data, deployment addresses, user identifiers, credentials, private repositories, or environment-based configuration.
+A private-by-default, cloneable operating system for an agent-assisted knowledge
+vault. It combines TencentDB Agent Memory, a sourced wiki, session memory,
+Graphify/code graphs, local or hosted model lanes, an optional panel, and
+scheduled maintenance—without committing personal data, credentials, hosts, or
+live routing configuration.
 
-## What this repository contains
+## Repository structure
 
 ```text
-contracts/      Versioned JSON shapes for lifecycle events and read-only tools
-deploy/         Service-topology reference with no bindings or configuration values
-docs/           Architecture, operating model, security boundary, and webhook guide
-hooks/          Configuration-free transcript parsing and idempotency utilities
-mcp/            Progressive MCP tool discovery implementation and tests
-tools/          Offline audit script used before publishing
-tests/          Tests for the hook utilities
+bootstrap/       empty-state templates and migration checklist
+raw/             immutable user-owned source intake
+wiki/            sourced pages, index, templates, activity log
+projects/        reusable operating documents
+hooks/           capture, recall, sweep, and persona utilities
+tools/           intake, queue, wiki, graph, and model-router tools
+automation/      stale-page, graph, container, and vault-cycle maintenance
+mcp/             local progressive-discovery catalog
+skills/          detailed agent workflows
+.claude/commands/ database-backed procedures only
+deploy/           containers, router, and scheduler templates
+vendor/           TencentDB Agent Memory upstream submodule
 ```
 
-## How it works
+## System flow
 
-1. A session host emits a lifecycle payload through standard input.
-2. The capture utility keeps only substantive user/assistant text pairs and gives each pair two deterministic identities.
-3. A caller-owned adapter may send accepted records to a memory service. That adapter is intentionally not included: transport, identity, and authorization are deployment concerns.
-4. A session-start adapter may retrieve L0 conversation history, L1 facts, and L2 scene summaries, then inject only fresh, explicitly approved context.
-5. The MCP server exposes one code-execution tool over a curated, read-only catalog. `search` and `describe` keep full schemas out of every initial model prompt.
+```text
+approved exports → raw/ → queue → model/human curation → wiki
+agent sessions → hooks → L0 → L1 facts + L2 scenes → bounded handoff
+approved wiki + code/conversations → one graph writer → Graphify MCP
+memory-core + knowledge + embeddings + optional panel → private agent adapter
+```
 
-This repository now includes the complete reusable vault skeleton: `raw/`, `wiki/`, `journal/`, `content/`, priorities, client instructions, hook templates, a local MCP catalog, and a deterministic code-graph baseline. It intentionally excludes only the live clients, service bindings, identity values, secret material, and deployment configuration.
+Hooks capture memory; they do not automatically create wiki pages. Wiki content
+is created only through reviewed ingestion with source provenance.
 
-## Verify before publication
+## Quick start
+
+1. Clone with upstream services: `git clone --recurse-submodules <repository>`.
+2. Read [CLAUDE.md](CLAUDE.md), [AGENTS.md](AGENTS.md), and the
+   [setup tutorial](docs/setup/tutorial.md).
+3. Add only your own exports under `raw/`.
+4. Deploy the upstream components with [TencentDB setup](docs/setup/tencentdb-agent-memory.md).
+5. Select embeddings and model lanes with [embedding](docs/operations/embeddings.md)
+   and [model policy](docs/operations/model-lane.md).
+6. Register Claude or Codex using [agent integration](docs/claude-and-codex.md)
+   and implement a protected [private adapter](docs/setup/private-adapter.md).
+7. Register and test only the needed jobs from [schedulers](deploy/schedulers/README.md).
+
+## Operations
+
+| Need | Procedure or tool |
+| --- | --- |
+| Collect exports | `/pull-sourcesDB`, `tools/source_intake.py` |
+| Triage / curate | `/triageDB`, `/ingestDB`, `tools/ingest_queue.py` |
+| Log / audit | `/logDB`, `/lintDB`, `tools/wiki_maintenance.py` |
+| Retrieve knowledge | `/queryDB`, Graphify MCP, private memory adapter |
+| Maintain state | `automation/stale_pages.py`, `automation/graph_refresh.py` |
+| Reconcile services | `automation/container_reconcile.py --apply` |
+| Run safe local cycle | `automation/vault_cycle.py` |
+
+## Models, privacy, and private code
+
+Local models suit sensitive embeddings, extraction, summaries, and bounded
+classification. Hosted research lanes may handle explicitly approved
+non-sensitive research, never private raw sources by default. Models propose;
+source evidence and deterministic validation decide durable knowledge.
+
+The reference embedding model is `nomic-embed-text-v1.5` at 768 dimensions.
+Changing its identity requires re-embedding all vectors. For private repository
+graphs, build beside a trusted checkout or use a dedicated read-only identity
+outside Git. See [private code graphs](docs/setup/private-code-graphs.md).
+
+## Publication gate
 
 ```sh
-python3 tools/audit_release.py .
 python3 -m unittest discover -s tests
+python3 tools/audit_release.py .
 ```
 
-The audit rejects common credential markers, deployment-address markers, environment-variable access, and private-path markers. Review its output manually as well; automated scanning is a gate, not proof.
-
-Start with the [setup tutorial](docs/setup/tutorial.md), the [TencentDB submodule guide](docs/setup/tencentdb-agent-memory.md), and the [private adapter contract](docs/setup/private-adapter.md). See [raw-source intake](docs/operations/source-intake.md), [Claude and Codex integration](docs/claude-and-codex.md), [container tutorial](deploy/containers/README.md), [panel and Graphify MCP](docs/operations/panel-and-graphify.md), [model router tiering](docs/operations/model-router.md), [model lane](docs/operations/model-lane.md), [code-graph pipeline](docs/code-graph.md), [security boundary](docs/security.md), [MCP contract](docs/mcp.md), and [lifecycle webhook contract](docs/webhooks.md).
+Also run a secret scanner and manual review before changing repository visibility.

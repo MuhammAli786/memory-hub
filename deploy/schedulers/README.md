@@ -13,6 +13,7 @@ queue, refresh task views, and rebuild the graph from completed knowledge.
 | Wiki ingest | After reviewed queue approval | One worker | Curate approved pages; never overwrite protected pages |
 | Graph refresh | Hourly after wiki work | Designated graph host | Replace one graph snapshot only after a complete build |
 | Task publication | Daily | Task owner machine | Regenerate views from the task source of truth |
+| Container reconciliation | Scheduled health, explicit apply | Memory host | Rebuild/restart only through controlled apply |
 | Container health/backup | Daily health, regular backup | Memory host | Alert or create consistent backup; never silently erase state |
 
 ## Rules
@@ -29,3 +30,8 @@ queue, refresh task views, and rebuild the graph from completed knowledge.
   on it.
 
 See `cron.example`, `launchd.template.plist`, and `windows-task.md`.
+
+The portable scripts are `automation/vault_cycle.py`, `automation/stale_pages.py`,
+`automation/graph_refresh.py`, and `automation/container_reconcile.py`. The
+first three are safe local maintenance; container reconciliation is plan-only
+until an operator passes `--apply` against their private compose file.

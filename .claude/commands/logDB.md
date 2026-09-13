@@ -1,6 +1,17 @@
 ---
-description: Append a verified activity record to the local and private knowledge stores
-argument-hint: "<note>"
+description: Append a verified activity record locally and through the private knowledge adapter
+argument-hint: "<factual note>"
 ---
 
-Append the note locally with `tools/append_activity.py`. If a private knowledge adapter is configured, invoke its reviewed atomic append operation before reporting success. Do not write directly to `wiki/log.md`. The activity log is append-only; update an existing referenced page separately when its state changed.
+# LogDB
+
+Record only completed, evidence-backed work: changes, verification, failure,
+remaining work, and page links. The activity log is not a plan, secret store,
+or model scratchpad.
+
+1. Locate any affected wiki page and update it only when evidence supports it.
+2. Bump `last-updated`, lint the page, and append once with
+   `tools/append_activity.py --log wiki/activity-log.md`.
+3. Mirror via the private adapter’s atomic append only when configured, and
+   verify its outcome before reporting synchronization.
+4. Never alter prior entries or write vault content to `wiki/log.md`.

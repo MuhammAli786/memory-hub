@@ -1,5 +1,14 @@
 ---
-description: Audit wiki and private knowledge-store consistency without changing either
+description: Audit local and private wiki consistency without changing either
 ---
 
-Read only. Compare the local wiki against the private adapter’s page inventory if available. Report content divergence, pages missing from either store, invalid frontmatter, broken links, or stale graph snapshots separately. If the private wiki is not ready, report that state and stop rather than treating an empty result as an empty knowledge base.
+# LintDB
+
+Read-only audit. First check private-store readiness; stop if it is unavailable
+instead of interpreting an empty page list as an empty wiki.
+
+Report separately: local/private divergence, pages missing on either side,
+invalid/missing frontmatter, broken links, index omissions, stale pages, graph
+freshness, and contradictions. Name each affected page and evidence. Do not
+repair, sync, delete, or overwrite during this command; recommend the smallest
+safe next operation instead.
