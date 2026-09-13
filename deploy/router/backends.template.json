@@ -2,6 +2,8 @@
   "backends": [
     {
       "name": "local-primary",
+      "base_url": "",
+      "credential_file": "",
       "model": "operator-selected-local-model",
       "tier": 0,
       "max_context": 16384,
@@ -10,6 +12,8 @@
     },
     {
       "name": "research-fallback",
+      "base_url": "",
+      "credential_file": "",
       "model": "operator-selected-research-model",
       "tier": 1,
       "max_context": 32768,

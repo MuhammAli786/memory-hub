@@ -14,7 +14,7 @@ tier 2: optional emergency capacity
 
 The router filters out backends whose context window cannot fit the estimated prompt plus requested output. On transport or status failure it benches that backend briefly and tries the next candidate. It does not declare a slow or low-quality answer failed: quality validation belongs to the caller, and latency policy must be explicit.
 
-`tools/model_router.py` is a dependency-free, configuration-file selection core. It contains no endpoint or credential. Use it to test order:
+`tools/model_router.py` is a dependency-free, configuration-file selection core. `tools/model_router_server.py` is the matching proxy runtime. Neither contains endpoint or credential values. The operator creates an untracked local copy of the backend config, provides its own private backend URLs and optional credential-file paths, and starts the server with explicit bind and port arguments. Use the selector to test order:
 
 ```sh
 python3 tools/model_router.py --config deploy/router/backends.template.json --estimated-tokens 2000
