@@ -38,6 +38,8 @@ python3 tools/build_code_graph.py --root . --output graphify-out/graph.json
 
 For richer document and relationship extraction, install Graphify separately and use its documented local pipeline. Designate one writer for `graphify-out/graph.json`; treat graph output as a navigation aid and verify relevant source files before acting.
 
+For a private repository, use the [private code-graph guide](private-code-graphs.md). Build locally beside an existing checkout by default; only let a knowledge service clone the repository with a dedicated read-only identity held outside version control.
+
 ## 6. Add a memory backend
 
 Choose a memory backend and write a private adapter that maps accepted capture batches to L0, extraction output to L1, and scene summaries to L2. Keep all connection data, identity values, authorisation material, and persistence endpoints in the deployment’s protected configuration system—not in this repository.

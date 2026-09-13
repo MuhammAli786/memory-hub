@@ -16,3 +16,5 @@ authoritative corpus → normalize → chunk → structural and semantic extract
 - Queries return leads, not a substitute for reading the current file.
 
 `tools/build_code_graph.py` is the dependency-free baseline. It emits functions, imports, and call-name edges from Python files. A full Graphify deployment can extend this with more languages and document relationships.
+
+For private repositories, follow the [private code-graph guide](setup/private-code-graphs.md). The recommended default is to build beside an existing private checkout; a knowledge-service clone needs its own least-privilege read identity managed outside Git.
