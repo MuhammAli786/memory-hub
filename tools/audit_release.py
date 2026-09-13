@@ -15,7 +15,7 @@ RULES = {
     "credential assignment": r"(?i)(?:api[_-]?key|password|secret|token)\s*[:=]\s*[^<\s][^\s]*",
     "authorization header": r"(?i)authorization\s*[:=]",
 }
-SKIP = {".git", "node_modules", "coverage", "local-data", "local-config"}
+SKIP = {".git", "node_modules", "coverage", "local-data", "local-config", "vendor"}
 TEXT_SUFFIXES = {".md", ".py", ".ts", ".mjs", ".json", ".toml", ".yaml", ".yml", ".txt", ".gitignore"}
 
 

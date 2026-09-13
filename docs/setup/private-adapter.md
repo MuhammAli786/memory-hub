@@ -20,7 +20,7 @@ The adapter owns authorization, user scope, protected configuration, and all ser
 2. Register Claude hooks or the Codex MCP catalog from the supplied templates.
 3. Implement or select a private adapter matching the capability table.
 4. Feed recall output into `hooks/recall_hook.py` and capture output from `hooks/run_capture.py` into the adapter.
-5. Register read-only memory, wiki, and graph operations through the agent’s local MCP configuration.
+5. Register read-only memory, wiki, and graph operations through the agent’s local MCP configuration. The included catalog and Graphify entries cover local discovery and relationship queries; the private adapter contributes the live memory and knowledge operations.
 6. Test an empty result, denied access, slow dependency, duplicate capture, and service restart before importing personal data.
 
 The resulting agent has the same capability model as this architecture while keeping the operator’s data and connectivity independent.

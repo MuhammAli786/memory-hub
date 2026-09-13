@@ -16,9 +16,13 @@ The host passes a lifecycle envelope on standard input. The included scripts do 
 
 The command files provide `log`, `ingest`, and `query` procedures so the client uses the same wiki and activity-log conventions as other tools.
 
+Copy `.claude/mcp.template.json` into the agent’s private MCP registration and replace the repository-root placeholder. Build the local catalog first. Install Graphify locally before registering its graph MCP entry; it indexes the cloned vault and does not need the operator’s memory-service configuration.
+
 ## Codex
 
 `AGENTS.md` is the project instruction contract. `.codex/config.template.toml` registers the local MCP catalog. After building `mcp/`, Codex can call the catalog’s `search` and `describe` operations to discover the L0, L1, L2, wiki, and code-graph vocabulary before talking to a separately configured private backend.
+
+The same template registers Graphify as a second local MCP server. It supports relationship queries across the vault and complements TencentDB’s registered-repository code graph.
 
 ## Shared rule
 

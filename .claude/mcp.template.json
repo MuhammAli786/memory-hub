@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "second-brain-catalog": {
+      "command": "node",
+      "args": ["<repository-root>/mcp/dist/server.js"]
+    },
+    "graphify": {
+      "command": "graphify",
+      "args": ["<repository-root>", "--mcp"]
+    }
+  }
+}

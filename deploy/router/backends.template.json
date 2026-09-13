@@ -1,0 +1,20 @@
+{
+  "backends": [
+    {
+      "name": "local-primary",
+      "model": "operator-selected-local-model",
+      "tier": 0,
+      "max_context": 16384,
+      "max_tokens": 4096,
+      "enabled": true
+    },
+    {
+      "name": "research-fallback",
+      "model": "operator-selected-research-model",
+      "tier": 1,
+      "max_context": 32768,
+      "max_tokens": 4096,
+      "enabled": false
+    }
+  ]
+}

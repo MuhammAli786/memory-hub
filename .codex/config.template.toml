@@ -3,3 +3,7 @@
 [mcp_servers.second_brain_catalog]
 command = "node"
 args = ["<repository-root>/mcp/dist/server.js"]
+
+[mcp_servers.graphify]
+command = "graphify"
+args = ["<repository-root>", "--mcp"]

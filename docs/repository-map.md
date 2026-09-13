@@ -13,5 +13,7 @@
 | `mcp/` | Local progressive-discovery catalog server |
 | `tools/` | Activity logging and structural graph builder |
 | `deploy/` | Container topology and host tutorial |
+| `deploy/router/` | Tiered model-router configuration template |
 | `docs/operations/` | Embedding, handoff, lifecycle, and graph operations |
 | `docs/setup/private-adapter.md` | Capability contract for connecting an agent to private services |
+| `vendor/TencentDB-Agent-Memory` | Pinned upstream TencentDB Agent Memory submodule |

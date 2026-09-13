@@ -6,6 +6,8 @@ This guide creates a working local knowledge base and integration structure. It 
 
 Clone this repository, review `AGENTS.md`, and keep source exports under `raw/`. Initialize the wiki by retaining `wiki/index.md`, `wiki/activity-log.md`, and the provided folders. Add current work to `priorities.md`.
 
+Initialize the upstream TencentDB Agent Memory implementation with the [submodule guide](tencentdb-agent-memory.md), then follow the container guide to run its memory, knowledge, and optional panel components on a dedicated machine.
+
 ## 2. Use the wiki
 
 Create one atomic page from `wiki/templates/page.md`. Cite the source under `raw/`, use wiki links for related pages, update `wiki/index.md`, then append a factual entry to the activity log:
@@ -40,4 +42,4 @@ For richer document and relationship extraction, install Graphify separately and
 
 Choose a memory backend and write a private adapter that maps accepted capture batches to L0, extraction output to L1, and scene summaries to L2. Keep all connection data, identity values, authorisation material, and persistence endpoints in the deployment’s protected configuration system—not in this repository.
 
-Choose a local, hosted, or routed model for extraction and review work. Follow [the model-lane policy](../operations/model-lane.md): models may propose and classify, but source evidence and deterministic checks decide what becomes durable knowledge.
+Choose a local, hosted, or routed model for extraction and review work. Follow [the model-lane policy](../operations/model-lane.md) and [tiered router guide](../operations/model-router.md): models may propose and classify, but source evidence and deterministic checks decide what becomes durable knowledge.
