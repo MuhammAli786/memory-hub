@@ -14,6 +14,7 @@
 | `tools/` | Activity logging and structural graph builder |
 | `deploy/` | Container topology and host tutorial |
 | `deploy/router/` | Tiered model-router configuration template |
+| `deploy/schedulers/` | Cron, launchd, and Windows scheduled-job templates |
 | `docs/operations/` | Embedding, handoff, lifecycle, and graph operations |
 | `docs/setup/private-adapter.md` | Capability contract for connecting an agent to private services |
 | `vendor/TencentDB-Agent-Memory` | Pinned upstream TencentDB Agent Memory submodule |

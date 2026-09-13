@@ -43,3 +43,10 @@ For richer document and relationship extraction, install Graphify separately and
 Choose a memory backend and write a private adapter that maps accepted capture batches to L0, extraction output to L1, and scene summaries to L2. Keep all connection data, identity values, authorisation material, and persistence endpoints in the deployment’s protected configuration system—not in this repository.
 
 Choose a local, hosted, or routed model for extraction and review work. Follow [the model-lane policy](../operations/model-lane.md) and [tiered router guide](../operations/model-router.md): models may propose and classify, but source evidence and deterministic checks decide what becomes durable knowledge.
+
+## 7. Register scheduled jobs
+
+Use the [scheduler guide](../../deploy/schedulers/README.md) after the manual
+workflow works. Register the session sweeper, source intake, graph refresh,
+task publication, and backup jobs locally with only the capabilities that user
+has actually configured. Test each one manually and verify a real scheduled run.

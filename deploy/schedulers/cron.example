@@ -1,0 +1,18 @@
+# Copy selected lines into the operator's private crontab and replace placeholders.
+# All commands must point to an operator-created wrapper that provides protected
+# configuration and writes a local log.
+
+# Session safety-net sweep every 30 minutes.
+*/30 * * * * <repository-root>/local/run-session-sweep
+
+# Approved source intake and queue refresh every hour.
+5 * * * * <repository-root>/local/run-source-intake
+
+# Single-writer graph refresh after the hourly intake window.
+25 * * * * <repository-root>/local/run-graph-refresh
+
+# Publish task views once per day.
+10 7 * * * <repository-root>/local/run-task-publication
+
+# Verify persistence and create a consistent backup once per day.
+30 2 * * * <repository-root>/local/run-memory-backup
