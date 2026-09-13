@@ -1,4 +1,4 @@
-# Second Brain Memory Architecture
+# Memory Hub
 
 A private-by-default, cloneable operating system for an agent-assisted knowledge
 vault. It combines TencentDB Agent Memory, a sourced wiki, session memory,
@@ -34,6 +34,39 @@ memory-core + knowledge + embeddings + optional panel → private agent adapter
 
 Hooks capture memory; they do not automatically create wiki pages. Wiki content
 is created only through reviewed ingestion with source provenance.
+
+## How it works
+
+```mermaid
+flowchart TD
+    A[User-owned exports and notes] --> B[Raw source intake]
+    B --> C{Quality and dedupe gate}
+    C -->|Approved| D[Review queue]
+    C -->|Thin duplicate or excluded| E[Deferred with reason]
+    D --> F[Local or approved hosted model]
+    F --> G[Human and deterministic verification]
+    G --> H[Curated wiki and activity log]
+
+    I[Coding-agent session] --> J[Capture hooks]
+    J --> K[L0 conversation records]
+    K --> L[L1 facts and L2 work scenes]
+    L --> M[Fresh reviewed session handoff]
+    M --> I
+
+    H --> N[Single-writer graph refresh]
+    K --> N
+    N --> O[Graphify MCP and code-graph queries]
+
+    P[Memory core knowledge service embeddings and panel] --> Q[Private agent adapter]
+    Q --> I
+    L --> P
+    H --> P
+
+    R[Scheduled maintenance] --> J
+    R --> B
+    R --> N
+    R --> P
+```
 
 ## Quick start
 
