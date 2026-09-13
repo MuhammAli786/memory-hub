@@ -14,7 +14,9 @@ Both clients use the same vault contract, but their registration files differ.
 
 The host passes a lifecycle envelope on standard input. The included scripts do not make a connection. A private adapter may consume their JSON output.
 
-The command files provide `log`, `ingest`, and `query` procedures so the client uses the same wiki and activity-log conventions as other tools.
+The eight DB command files provide source intake, ingest, logging, querying,
+briefing, debrief, lint, and triage procedures so the client uses one private
+knowledge-aware operating surface.
 
 Copy `.claude/mcp.template.json` into the agent’s private MCP registration and replace the repository-root placeholder. Build the local catalog first. Install Graphify locally before registering its graph MCP entry; it indexes the cloned vault and does not need the operator’s memory-service configuration.
 

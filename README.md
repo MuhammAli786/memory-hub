@@ -35,6 +35,13 @@ memory-core + knowledge + embeddings + optional panel → private agent adapter
 Hooks capture memory; they do not automatically create wiki pages. Wiki content
 is created only through reviewed ingestion with source provenance.
 
+The running deployment is multi-machine: coding-agent clients and a local
+Graphify MCP connect through a private tailnet to an always-on memory/knowledge
+host, which may use separate trusted accelerator hosts through the tiered model
+router. Read the [system integration map](docs/operations/system-integrations.md)
+and [Tailnet deployment boundary](deploy/tailnet/README.md) before configuring
+your own network.
+
 ## How it works
 
 ```mermaid
