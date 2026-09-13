@@ -7,3 +7,5 @@ __pycache__/
 *.py[cod]
 local-data/
 local-config/
+graphify-out/
+bootstrap/private-imports/

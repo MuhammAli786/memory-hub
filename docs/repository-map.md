@@ -17,3 +17,4 @@
 | `docs/operations/` | Embedding, handoff, lifecycle, and graph operations |
 | `docs/setup/private-adapter.md` | Capability contract for connecting an agent to private services |
 | `vendor/TencentDB-Agent-Memory` | Pinned upstream TencentDB Agent Memory submodule |
+| `bootstrap/` | Empty-state templates and private migration checklist |
