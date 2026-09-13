@@ -39,3 +39,5 @@ For richer document and relationship extraction, install Graphify separately and
 ## 6. Add a memory backend
 
 Choose a memory backend and write a private adapter that maps accepted capture batches to L0, extraction output to L1, and scene summaries to L2. Keep all connection data, identity values, authorisation material, and persistence endpoints in the deployment’s protected configuration system—not in this repository.
+
+Choose a local, hosted, or routed model for extraction and review work. Follow [the model-lane policy](../operations/model-lane.md): models may propose and classify, but source evidence and deterministic checks decide what becomes durable knowledge.

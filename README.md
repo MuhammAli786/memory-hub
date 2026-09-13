@@ -33,4 +33,4 @@ python3 -m unittest discover -s tests
 
 The audit rejects common credential markers, deployment-address markers, environment-variable access, and private-path markers. Review its output manually as well; automated scanning is a gate, not proof.
 
-Start with the [setup tutorial](docs/setup/tutorial.md). See the [wiki structure](wiki/README.md), [Claude and Codex integration](docs/claude-and-codex.md), [code-graph pipeline](docs/code-graph.md), [security boundary](docs/security.md), [MCP contract](docs/mcp.md), and [lifecycle webhook contract](docs/webhooks.md).
+Start with the [setup tutorial](docs/setup/tutorial.md), then implement the [private adapter contract](docs/setup/private-adapter.md). See the [wiki structure](wiki/README.md), [Claude and Codex integration](docs/claude-and-codex.md), [container tutorial](deploy/containers/README.md), [code-graph pipeline](docs/code-graph.md), [model lane](docs/operations/model-lane.md), [security boundary](docs/security.md), [MCP contract](docs/mcp.md), and [lifecycle webhook contract](docs/webhooks.md).
