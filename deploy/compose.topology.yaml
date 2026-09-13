@@ -1,0 +1,17 @@
+services:
+  memory-core:
+    image: memory-core-reference
+    volumes:
+      - memory-data:/data
+  knowledge:
+    image: knowledge-reference
+    volumes:
+      - knowledge-data:/data
+  panel:
+    image: panel-reference
+    depends_on:
+      - memory-core
+      - knowledge
+volumes:
+  memory-data: {}
+  knowledge-data: {}

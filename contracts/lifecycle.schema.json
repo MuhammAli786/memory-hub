@@ -1,0 +1,14 @@
+{
+  "title": "Session Lifecycle Envelope",
+  "type": "object",
+  "properties": {
+    "event": {"enum": ["session.start", "session.stop", "session.end"]},
+    "session_id": {"type": "string", "minLength": 1},
+    "transcript_path": {"type": "string"},
+    "project": {"type": "string"},
+    "occurred_at": {"type": "string", "format": "date-time"},
+    "known_turn_ids": {"type": "array", "items": {"type": "string"}}
+  },
+  "required": ["event", "session_id"],
+  "additionalProperties": false
+}

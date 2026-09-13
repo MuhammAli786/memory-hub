@@ -1,0 +1,10 @@
+{
+  "tools": [
+    {"name": "memory_search", "mode": "read", "summary": "Search extracted facts and decisions."},
+    {"name": "conversation_search", "mode": "read", "summary": "Search source conversation turns."},
+    {"name": "scene_list", "mode": "read", "summary": "List work-period summaries."},
+    {"name": "scene_read", "mode": "read", "summary": "Read one work-period summary."},
+    {"name": "wiki_search", "mode": "read", "summary": "Search curated knowledge."},
+    {"name": "code_graph_list", "mode": "read", "summary": "Inspect graph freshness metadata."}
+  ]
+}
