@@ -75,6 +75,33 @@ flowchart TD
     R --> P
 ```
 
+## What happens when a user opens a new conversation
+
+```mermaid
+flowchart TD
+    A[User opens a new Claude, Codex, or compatible agent conversation] --> B[SessionStart event]
+    B --> C[Private retrieval adapter validates scope and requests bounded context]
+    C --> D{Fresh reviewed context available?}
+    D -->|Yes| E[Recall policy filters persona plus recent L0, L1, and L2 records]
+    D -->|No or dependency unavailable| F[Return an empty context block and continue]
+    E --> G[Agent receives advisory continuation context]
+    F --> G
+    G --> H[Agent handles the user's current request]
+    H --> I{Needs deeper evidence?}
+    I -->|Yes| J[Query the private memory adapter, sourced wiki, or Graphify on demand]
+    I -->|No| K[Continue with current-session work]
+    J --> K
+    K --> L[Stop or SessionEnd event]
+    L --> M[Capture policy selects substantive transcript turns and deduplicates them]
+    M --> N[Private persistence adapter stores accepted turns as L0]
+    N --> O[Background extraction may derive L1 facts and L2 work scenes]
+    O --> P[Later sessions receive only fresh, bounded, advisory context]
+```
+
+The start path is deliberately fail-open: unavailable retrieval never prevents a
+new conversation. Conversation capture preserves continuity, but it does not
+automatically turn a chat into a wiki page; curation remains a reviewed step.
+
 ## Quick start
 
 1. Clone with upstream services: `git clone --recurse-submodules <repository>`.
@@ -99,6 +126,30 @@ flowchart TD
 | Maintain state | `automation/stale_pages.py`, `automation/graph_refresh.py` |
 | Reconcile services | `automation/container_reconcile.py --apply` |
 | Run safe local cycle | `automation/vault_cycle.py` |
+
+## Scheduled maintenance
+
+The reference cron file, launchd template, and Windows Task Scheduler guide are
+in [deploy/schedulers](deploy/schedulers/README.md). Register only the jobs
+your private deployment needs; the scripts here are portable templates, not
+live production registrations.
+
+| Job | Reference cadence | Purpose |
+| --- | --- | --- |
+| Session sweeper | Every 30 minutes | Captures batches missed by normal stop/end hooks |
+| Source intake and queue refresh | Hourly | Collects approved exports and prepares the review queue |
+| Wiki ingest | After review approval | Curates approved material without overwriting protected pages |
+| Graph refresh | Hourly after intake | Rebuilds the one-writer graph snapshot from completed knowledge |
+| Task publication | Daily | Regenerates task views from their source of truth |
+| Container health and backup | Daily / regular backup | Checks persistence and creates consistent backups |
+| Container reconciliation | Scheduled health check; explicit apply | Plans service convergence; rebuilds or restarts only with `--apply` |
+
+See the concrete reference entries in
+[cron.example](deploy/schedulers/cron.example),
+[launchd.template.plist](deploy/schedulers/launchd.template.plist), and
+[windows-task.md](deploy/schedulers/windows-task.md). Every scheduled run
+should produce a local log and a named `SUCCESS`, `PARTIAL`, `BLOCKED`, or
+`FAILED` outcome.
 
 ## Models, privacy, and private code
 
