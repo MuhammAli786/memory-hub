@@ -1,4 +1,4 @@
-export type Tool = { name: string; summary: string; input: Record<string, unknown> };
+export type Tool = { name: string; summary: string; input?: Record<string, unknown> };
 
 const terms = (value: string) => value.toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
 
@@ -17,6 +17,6 @@ export function describe(tools: Tool[], names: string[]) {
   return names.map((name) => {
     const tool = indexed.get(name);
     if (!tool) throw new Error(`unknown tool: ${name}`);
-    return { name: tool.name, summary: tool.summary, input: tool.input };
+    return { name: tool.name, summary: tool.summary, input: tool.input ?? {} };
   });
 }

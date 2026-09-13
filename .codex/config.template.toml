@@ -1,0 +1,5 @@
+# Copy this block into local Codex configuration and replace <repository-root>.
+# The server is offline and exposes only the catalog's search and describe tools.
+[mcp_servers.second_brain_catalog]
+command = "node"
+args = ["<repository-root>/mcp/dist/server.js"]

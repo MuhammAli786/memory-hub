@@ -22,7 +22,7 @@ tests/          Tests for the hook utilities
 4. A session-start adapter may retrieve L0 conversation history, L1 facts, and L2 scene summaries, then inject only fresh, explicitly approved context.
 5. The MCP server exposes one code-execution tool over a curated, read-only catalog. `search` and `describe` keep full schemas out of every initial model prompt.
 
-This project is a reference artifact, not a deployable service. It intentionally excludes live clients, service bindings, identity values, secret material, and configuration loading.
+This repository now includes the complete reusable vault skeleton: `raw/`, `wiki/`, `journal/`, `content/`, priorities, client instructions, hook templates, a local MCP catalog, and a deterministic code-graph baseline. It intentionally excludes only the live clients, service bindings, identity values, secret material, and deployment configuration.
 
 ## Verify before publication
 
@@ -33,4 +33,4 @@ python3 -m unittest discover -s tests
 
 The audit rejects common credential markers, deployment-address markers, environment-variable access, and private-path markers. Review its output manually as well; automated scanning is a gate, not proof.
 
-See [the security boundary](docs/security.md), [architecture](docs/architecture.md), [MCP contract](docs/mcp.md), and [lifecycle webhook contract](docs/webhooks.md).
+Start with the [setup tutorial](docs/setup/tutorial.md). See the [wiki structure](wiki/README.md), [Claude and Codex integration](docs/claude-and-codex.md), [code-graph pipeline](docs/code-graph.md), [security boundary](docs/security.md), [MCP contract](docs/mcp.md), and [lifecycle webhook contract](docs/webhooks.md).

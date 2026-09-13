@@ -16,7 +16,7 @@ RULES = {
     "authorization header": r"(?i)authorization\s*[:=]",
 }
 SKIP = {".git", "node_modules", "coverage", "local-data", "local-config"}
-TEXT_SUFFIXES = {".md", ".py", ".ts", ".json", ".yaml", ".yml", ".txt", ".gitignore"}
+TEXT_SUFFIXES = {".md", ".py", ".ts", ".mjs", ".json", ".toml", ".yaml", ".yml", ".txt", ".gitignore"}
 
 
 def main(root: Path) -> int:

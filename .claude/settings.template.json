@@ -1,0 +1,13 @@
+{
+  "hooks": {
+    "SessionStart": [{
+      "hooks": [{"type": "command", "command": "python3 <repository-root>/hooks/recall_hook.py"}]
+    }],
+    "Stop": [{
+      "hooks": [{"type": "command", "command": "python3 <repository-root>/hooks/run_capture.py"}]
+    }],
+    "SessionEnd": [{
+      "hooks": [{"type": "command", "command": "python3 <repository-root>/hooks/run_capture.py"}]
+    }]
+  }
+}

@@ -1,6 +1,6 @@
-import { describe, search, type Tool } from "../src/catalog.ts";
+import { describe, search } from "../dist/catalog.js";
 
-const tools: Tool[] = [
+const tools = [
   { name: "wiki_search", summary: "Search curated knowledge.", input: { query: "string" } },
   { name: "code_graph_list", summary: "List code graph metadata.", input: {} },
 ];
