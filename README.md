@@ -115,6 +115,11 @@ automatically turn a chat into a wiki page; curation remains a reviewed step.
    and implement a protected [private adapter](docs/setup/private-adapter.md).
 7. Register and test only the needed jobs from [schedulers](deploy/schedulers/README.md).
 
+For an authorized deployment agent, start with the copy-ready
+[agent deployment prompt](docs/setup/agent-deployment-prompt.md). It sequences
+preflight, private configuration, lifecycle wiring, fixture tests, scheduling,
+and the personal-data acceptance gate.
+
 ## Operations
 
 | Need | Procedure or tool |
