@@ -28,6 +28,60 @@ def turn_id(user: str, assistant: str) -> str:
     return hashlib.sha256((user + "\0" + assistant).encode("utf-8")).hexdigest()
 
 
+def pending_path(pending_dir: Path, session_id: str, turn_id_value: str) -> Path:
+    """Return a safe, stable outbox path for one lifecycle turn."""
+    digest = hashlib.sha256(f"{session_id}\0{turn_id_value}".encode("utf-8")).hexdigest()
+    return pending_dir / f"{digest}.json"
+
+
+def save_pending_prompt(pending_dir: Path, *, session_id: str, turn_id_value: str,
+                        prompt: str, cwd: str = "") -> Path:
+    """Durably stage a prompt before a lifecycle hook can receive its reply."""
+    if not prompt.strip():
+        raise ValueError("prompt must not be empty")
+    path = pending_path(pending_dir, session_id, turn_id_value)
+    pending_dir.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps({
+        "session_id": session_id,
+        "turn_id": turn_id_value,
+        "prompt": prompt.strip(),
+        "cwd": cwd,
+    }), encoding="utf-8")
+    return path
+
+
+def save_pending_reply(path: Path, assistant: str) -> dict[str, str]:
+    """Complete a staged turn before any external persistence attempt.
+
+    This is deliberately offline: adapters may now retry a fully preserved
+    prompt/reply pair after a transport outage without reconstructing content.
+    """
+    if not assistant.strip():
+        raise ValueError("assistant reply must not be empty")
+    record = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(record.get("prompt"), str) or not record["prompt"].strip():
+        raise ValueError("pending record has no prompt")
+    record["assistant"] = assistant.strip()
+    path.write_text(json.dumps(record), encoding="utf-8")
+    return record
+
+
+def replayable_pending(pending_dir: Path) -> list[dict[str, str]]:
+    """Load only completed outbox records for a caller-owned retry adapter."""
+    if not pending_dir.is_dir():
+        return []
+    completed: list[dict[str, str]] = []
+    for path in sorted(pending_dir.glob("*.json"), key=lambda item: item.stat().st_mtime):
+        try:
+            record = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        required = ("session_id", "turn_id", "prompt", "assistant")
+        if all(isinstance(record.get(key), str) and record[key].strip() for key in required):
+            completed.append({key: record[key] for key in (*required, "cwd") if isinstance(record.get(key), str)})
+    return completed
+
+
 def parse_turns(transcript: Path) -> list[dict[str, str]]:
     turns: list[dict[str, str]] = []
     pending_user = ""
